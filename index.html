@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Tetris</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="...">
+
+  <link href="tetris.css" rel="stylesheet" type="text/css">  
+  <script type="module" src="tetris.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="heading">
+    <h1 class="title">Tetris</h1>
+    <div class="score-container">0</div>
+  </div>
+
+  <div class="game-container">
+    <div class="game-message">
+      <p class="message"></p>
+      <div class="lower"><a id="message-button" class="retry-button">Try again</a></div>
+    </div>
+    <div class="field">
+      <table id='grid'></table>
+    </div>
+  </div>
+
+  <p class="game-explanation"><strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles.</p>
+  <hr>
+</div>
+</body>
+</html>

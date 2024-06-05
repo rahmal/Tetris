@@ -1,0 +1,42 @@
+@import 'base.css';
+
+.game-container {
+	width: 400px;
+  height: 750px;
+	background: black;
+}
+
+.field {
+	margin-top:20px;
+	margin-left: 30px;
+}
+
+.field #grid {
+	border: 1px solid white;
+}
+
+.field #grid td {	
+	width: 25px;
+	height: 25px;
+}
+
+.field #grid.border-on td {
+	border: 1px solid white;
+}
+
+.field #grid.border-off td {
+	border: 1px solid transparent;
+}
+
+.game-message p {
+	color: white;
+}
+.game-message a {
+	color: white;
+	background: black !important;
+}
+
+.game-message a:visited {
+	color: white;
+	background: black !important;
+}
