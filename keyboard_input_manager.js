@@ -52,8 +52,7 @@ KeyboardInputManager.prototype.listen = () => {
     }
   });
 
-  var retry = getElementByClass('retry-button');
-  addEvent(retry, 'click', this.restart.bind(this));
+  addEvent('retry-button', 'click', this.restart.bind(this));
 
   // Listen to swipe events
   var gestures = [

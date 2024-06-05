@@ -21,5 +21,12 @@ export const appendElement = ($parent, tag, opts = {id: null, cls: null}) => {
 }
 
 export const addEvent = ($element, event, callback) => {
+  if (isString($element)) {
+    $element = getElement($element) || getElementByClass($element);
+  }
   $element.addEventListener(event, callback);
+}
+
+export const isString = (value) => {
+  return (typeof value === 'string' || value instanceof String);
 }

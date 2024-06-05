@@ -32,7 +32,7 @@ export default class Tetris {
 
 	startGame = () => {
 		addEvent(document, 'keydown', this.execKeyCommand);
-		getElementByClass('retry-button').click(this.resetGame);
+		addEvent('retry-button', 'click', this.resetGame);
 		this.gravity = setInterval(this.refreshState, 500);
 	}
 
