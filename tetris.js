@@ -1,14 +1,15 @@
 import Grid from './grid';
+import InputHandler from "./input_handler";
 import Message from './message';
 import Row from './row';
 import Shape from './shape';
 import { getElementByClass, appendElement, addEvent } from './utils';
 
 const Direction = Object.freeze({
-	Left:  37,
-	Up:    38,
-	Right: 39,
-	Down:  40
+	Up:    0,
+	Right: 1,
+	Down:  2,
+	Left:  3
 });
 
 const Score = Object.freeze({
@@ -22,18 +23,35 @@ export default class Tetris {
   constructor() {
 		this.gravity      = null;
 		this.gameOver     = false;
+		this.paused       = false;
 		this.score        =  0;
 		this.level  		  =  1;
 		this.topCheck		  =  0;
 		this.grid         = new Grid();
 		this.currentShape = new Shape();
+		this.inputHandler = new InputHandler();
+    
+		this.inputHandler.on('move',    this.moveShape.bind(this));
+    this.inputHandler.on('restart', this.resetGame.bind(this));
+		this.inputHandler.on('pause',   this.pauseGame.bind(this));
+
 		this.startGame();
    }
 
 	startGame = () => {
-		addEvent(document, 'keydown', this.execKeyCommand);
-		addEvent('retry-button', 'click', this.resetGame);
 		this.gravity = setInterval(this.refreshState, 500);
+	}
+
+	pauseGame = () => {
+		if (this.paused) {
+			this.startGame();
+			this.paused = false;
+			(new Message('Paused')).remove();
+		} else {
+			clearInterval(this.gravity);
+			this.paused = true;
+			new Message('Paused', 'Resume');
+		}
 	}
 
 	refreshState = () => {
@@ -45,8 +63,8 @@ export default class Tetris {
 		this.checkGameOver();
 	}
 
-	resetGame = (e) => {
-		e.preventDefault();
+	resetGame = () => {
+		// e.preventDefault();
 		location.reload();
 	}
 
@@ -84,14 +102,13 @@ export default class Tetris {
 		}
 
 		if (this.gameOver) {			
-			(new Message('Game over!')).render();		
+			new Message('Game over!');		
 			clearInterval(this.gravity);			
 		}
 	}
 
-	execKeyCommand = (e) => {
-		e.preventDefault();
-		switch(e.keyCode) {
+	moveShape = (direction) => {
+		switch(direction) {
 			case Direction.Left:
 				this.currentShape.move('left');
 				this.updateScore(Score.Move);

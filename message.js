@@ -1,18 +1,32 @@
 import { getElement, getElementByClass } from './utils';
 
 export default class Message {
-  constructor(message, type = 'game-over') {
-    this.message = message;
-    this.type = type;
+  constructor(message, btnLabel = 'New Game', type = 'game-over') {
+    this.messageText = message;
+    this.buttonText  = btnLabel;
+    this.type        = type;
+    this.message     = getElementByClass('game-message');
+    this.content     = this.message.getElementsByTagName('p')[0];
+    this.button      = getElement('message-button');
+
+    this.render();
   }
 
-  render = () => {
-    var $message = getElementByClass('game-message');
-    var $button =  getElement('message-button');
+  render = () => {    
+    this.message.classList.add(this.type);
+    this.button.classList.add(this.type);
 
-    $message.classList.add(this.type);
-    $message.getElementsByTagName('p')[0].textContent = this.message;
+    this.content.textContent = this.messageText;
+    this.button.textContent = this.buttonText;
+  }
 
-    $button.classList.add(this.type);
+  remove = () => {
+    this.message.classList.remove(this.type);
+    this.button.classList.remove(this.type);
+  }
+
+  reset = () => {
+    this.remove();
+    this.render();
   }
 } // class Message
