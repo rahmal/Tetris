@@ -1,20 +1,6 @@
 import Hammer from './hammer';
 import { getElementByClass, addEvent } from './utils';
-
-const KeyMap = Object.freeze({
-  38: 0, // Up
-  39: 1, // Right
-  40: 2, // Down
-  37: 3, // Left
-  75: 0, // vim keybindings
-  76: 1,
-  74: 2,
-  72: 3
-});
-
-const SpaceBar = 32;
-const Escape   = 27;
-
+import { KeyMap, SpaceBar, Escape } from './constants';
 export default class InputHandler {
   constructor() {
     this.events = {};
@@ -31,7 +17,7 @@ export default class InputHandler {
   emit = (event, data) => {
     let callbacks = this.events[event];
     if (callbacks) {
-      callbacks.forEach(function (callback) {
+      callbacks.forEach((callback) => {
         callback(data);
       });
     }
@@ -58,17 +44,17 @@ export default class InputHandler {
       }
     });
 
+    // Listen for button events
+    addEvent('retry-button', 'click', (event) => {
+      event.preventDefault();
+      this.emit('restart');
+    });
+
     // Listen for swipe events
     self.swipeHandler().on('swipe', (event) => {
       event.gesture.preventDefault();
       direction = self.swipeGestures().indexOf(event.gesture.direction);
       if (direction !== -1) self.emit('move', direction);
-    });
-
-    // Listen for button events
-    addEvent('retry-button', 'click', (event) => {
-      event.preventDefault();
-      this.emit('restart');
     });
   };
 
@@ -81,7 +67,7 @@ export default class InputHandler {
   };
 
   metaKeys = (event) => {
-    return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+    return event.metaKey || event.altKey || event.ctrlKey || event.shiftKey;
   };
 
 } // class InputHandler

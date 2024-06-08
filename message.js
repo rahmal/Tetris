@@ -5,9 +5,9 @@ export default class Message {
     this.messageText = message;
     this.buttonText  = btnLabel;
     this.type        = type;
-    this.message     = getElementByClass('game-message');
-    this.content     = this.message.getElementsByTagName('p')[0];
+    this.message     = getElement('game-message');
     this.button      = getElement('message-button');
+    this.content     = this.message.getElementsByTagName('p')[0];
 
     this.render();
   }
@@ -26,7 +26,7 @@ export default class Message {
   }
 
   reset = () => {
-    this.remove();
+    this.remove('game-won', 'game-over');
     this.render();
   }
 } // class Message

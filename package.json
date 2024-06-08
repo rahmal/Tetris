@@ -1,7 +1,0 @@
-{
-  "type": "module",
-  "main": "tetris.js",
-  "scripts": {
-    "start": "node ./tetris.js --exec babel-node -e js"
-  }
-}
